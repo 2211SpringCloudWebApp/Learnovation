@@ -147,7 +147,7 @@ public class FreeBoardServiceImpl implements FreeBoardService {
     @Override
     public Page<FreeBoardDTO> freeBoardList(Pageable pageable) {
         int page = pageable.getPageNumber() - 1;
-        int pageLimit = 20; // 한 페이지에 보여줄 글 갯수
+        int pageLimit = 10; // 한 페이지에 보여줄 글 갯수
         // 한페이지당 3개씩 글을 보여주고 정렬 기준은 id 기준으로 내림차순 정렬
         // page 위치에 있는 값은 0부터 시작
         Page<FreeBoardEntity> freeBoardEntities =
@@ -180,7 +180,7 @@ public class FreeBoardServiceImpl implements FreeBoardService {
     @Override
     public Page<FreeBoardDTO> freeBoardSearchList (Pageable pageable, String searchKeyword){
         int page = pageable.getPageNumber() - 1;
-        int pageLimit = 20;
+        int pageLimit = 10;
         Page<FreeBoardEntity> freeBoardSearchEntities = freeBoardRepository.findByFreeBoardTitleContaining(searchKeyword, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
         Page<FreeBoardDTO> freeBoardSearchDTOS = freeBoardSearchEntities.map(freeBoardSearch ->  FreeBoardDTO.builder().id(freeBoardSearch.getId())
                 .userId(freeBoardSearch.getUser().getId())

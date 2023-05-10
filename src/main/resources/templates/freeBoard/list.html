@@ -51,8 +51,8 @@
       <div>
         <span>작성자 : </span>
         <span th:text="${freeBoard.nickname}"></span>
-        <span>수정 일 : </span>
-        <span th:text="${freeBoard.freeBoardCreatedTime}"></span>
+          <span>작성 일 : </span>
+        <span id="time" th:text="${freeBoard.freeBoardCreatedTime}"></span>
       </div>
       <div>
         <a th:if="${keyword == null}" th:href="@{|/freeBoard/detail/${freeBoard.id}|(page=${freeBoardDTOList.getNumber()+1})}"><span th:text="${freeBoard.getFreeBoardTitle()}"></span></a>
@@ -95,6 +95,34 @@
   </div>
 </main>
 <script src="/common/js/nav.js"></script>
+<script>
+    function getTimeDiffString(datetime) {
+        const now = new Date();
+        const date = new Date(datetime);
+        const diff = now - date;
 
+        const sec = Math.floor(diff / 1000);
+        const min = Math.floor(sec / 60);
+        const hour = Math.floor(min / 60);
+        const day = Math.floor(hour / 24);
+
+        if (day > 0) {
+            return `${day}일 전`;
+        } else if (hour > 0) {
+            return `${hour}시간 전`;
+        } else if (min > 0) {
+            return `${min}분 전`;
+        } else {
+            return '방금 전';
+        }
+    }
+    const timeElems = document.getElementById('time');
+    for (let i = 0; i < timeElems.length; i++) {
+        const timeElem = timeElems[i];
+        const datetime = timeElem.innerText;
+        timeElem.innerText = getTimeDiffString(datetime);
+    }
+
+</script>
 </body>
 </html>
